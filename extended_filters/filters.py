@@ -1,17 +1,22 @@
 import datetime
 
+from django import forms
+from django.contrib import admin
+from django.contrib.admin.options import IncorrectLookupParameters
+from django.contrib.admin.sites import site
+from django.contrib.admin.utils import prepare_lookup_value
+from django.db.models.fields.related import ForeignKey, ManyToManyField
 from django.utils.encoding import smart_text
 from django.utils.http import urlencode
-from django.db.models.fields.related import ForeignKey, ManyToManyField
-from django.contrib import admin
-from django.contrib.admin.templatetags.admin_static import static
-from django.contrib.admin.options import IncorrectLookupParameters
-from django.contrib.admin.utils import prepare_lookup_value
-from django.contrib.admin.sites import site
-from django import forms
 
+from . import AUTOCOMPLETE, MPTT
 from .forms import DateRangeForm
-from . import MPTT, AUTOCOMPLETE
+
+try:
+    from django.contrib.admin.templatetags.admin_static import static
+except ImportError:
+    from django.templatetags.static import static
+
 
 if MPTT:
     from mptt.forms import TreeNodeChoiceField
